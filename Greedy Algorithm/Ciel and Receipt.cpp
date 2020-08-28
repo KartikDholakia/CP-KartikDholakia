@@ -5,13 +5,23 @@ typedef short int st;
 #define mod 1000000007
 #define MAX 1000001
 #define INF 9223372036854775807
-#define all(x) x.begin(),x.end()
 
-//Q-Name
-//Concepts Used - 
-//Q-Link
+//https://www.codechef.com/problems/CIELRCPT
+//Ciel and Receipt
+//Greedy Algorithm
 void solve() {
-
+	int n;
+	cin >> n;
+	int ans = 0, x;
+	while (n > 0) {
+		x = log2(n);
+		if (x >= 12) 
+			n -= pow(2, 11);
+		else
+			n = n - pow(2, x);
+		ans++;
+	}
+	cout << ans << "\n";
 }
 
 int main() {
@@ -26,7 +36,7 @@ int main() {
 	#endif
 
 	st t = 1;
-//	cin >> t;
+	cin >> t;
 	for (st i = 0; i < t; i++) {
 		solve();
 	}

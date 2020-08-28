@@ -5,13 +5,15 @@ typedef short int st;
 #define mod 1000000007
 #define MAX 1000001
 #define INF 9223372036854775807
-#define all(x) x.begin(),x.end()
 
-//Q-Name
-//Concepts Used - 
-//Q-Link
+//https://www.codechef.com/problems/CHEFST
+//Chef and the stones
 void solve() {
-
+	ll n1, n2, m;
+	cin >> n1 >> n2 >> m;
+	ll ans = 0;
+	ans = max(abs(n1-n2), (n1 + n2 - m*(m+1)));
+	cout << ans << "\n";
 }
 
 int main() {
@@ -25,9 +27,9 @@ int main() {
 	//freopen is used to associate a file with stdin or stdout stream in C++
 	#endif
 
-	st t = 1;
-//	cin >> t;
-	for (st i = 0; i < t; i++) {
+	int t = 1;
+	cin >> t;
+	for (int i = 0; i < t; i++) {
 		solve();
 	}
 

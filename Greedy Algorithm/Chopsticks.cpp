@@ -5,13 +5,25 @@ typedef short int st;
 #define mod 1000000007
 #define MAX 1000001
 #define INF 9223372036854775807
-#define all(x) x.begin(),x.end()
 
-//Q-Name
-//Concepts Used - 
-//Q-Link
+//https://www.codechef.com/problems/TACHSTCK
+//Greedy
 void solve() {
+	int n, d, i;
+	cin >> n >> d;
+	vector<int> v(n, 0);
+	int ans = 0;
+	for (i = 0; i < n; i++)
+		cin >> v[i];
 
+	sort(v.begin(), v.end());
+	for (i = 1; i < n; i++) {
+		if (v[i] - v[i-1] <= d) {
+			ans++;
+			i++;
+		}
+	}
+	cout << ans << "\n";
 }
 
 int main() {
