@@ -16,16 +16,46 @@ typedef unsigned long long llu;
 #define vll vector<ll>
 #define pll pair<ll, ll>
 #define vpll vector<pair<ll, ll>>
+#define mem(x, y) memset(x, y, sizeof(x))
 #define loop_diff(var, start, end, diff) for (ll var = start; var < end; var += diff)
 #define loop(var, start, end) for (auto var = start; var < end; var++)
 #define loop_rev(var, start, end) for(auto var = start; var > end; var--)
-#define ordered_set tree<ll, null_type,less<ll>, rb_tree_tag,tree_order_statistics_node_update>
+#define ordered_set tree<pll, null_type,less<pll>, rb_tree_tag,tree_order_statistics_node_update>
 
-//Question Title
-//website link
-//concepts used / Contest Name
+//DP | Unbounded Knapsack 
+//https://www.spoj.com/problems/PIGBANK/
 void solve() {
+	ll emptyW, fullW, n, i, w;
+	cin >> emptyW >> fullW;
+	cin >> n;
 
+	vll val(n, 0), wt(n, 0);
+	loop(i, 0, n)
+		cin >> val[i] >> wt[i];
+
+	vll dp(fullW+1, INT_MAX);
+
+	loop(w, 0, emptyW+1)
+		dp[w] = 0;
+
+	loop(w, emptyW, fullW + 1) {
+		loop(i, 0, n) {
+			if (wt[i] <= w - emptyW) {
+				dp[w] = min(dp[w], 
+					(dp[w - wt[i]] + val[i])
+				);
+			}
+			// else
+			// 	dp[w] = 0;
+		}
+	}
+
+	if (dp[fullW] == INT_MAX) {
+		cout << "This is impossible.\n";
+	}
+	else {
+		cout << "The minimum amount of money in the piggy-bank is " << dp[fullW] << ".\n";
+	}
 }
 
 int main() {
@@ -44,7 +74,7 @@ int main() {
 	int t = 1;
 	cin >> t;
 	for (int i = 1; i <= t; i++) {
-		// cout << "Case #" << i << ": ";
+		// cout << "Case " << i << ": ";
 		solve();
 	}
 

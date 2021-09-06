@@ -16,16 +16,46 @@ typedef unsigned long long llu;
 #define vll vector<ll>
 #define pll pair<ll, ll>
 #define vpll vector<pair<ll, ll>>
+#define mem(x, y) memset(x, y, sizeof(x))
 #define loop_diff(var, start, end, diff) for (ll var = start; var < end; var += diff)
 #define loop(var, start, end) for (auto var = start; var < end; var++)
 #define loop_rev(var, start, end) for(auto var = start; var > end; var--)
-#define ordered_set tree<ll, null_type,less<ll>, rb_tree_tag,tree_order_statistics_node_update>
+#define ordered_set tree<pll, null_type,less<pll>, rb_tree_tag,tree_order_statistics_node_update>
 
-//Question Title
-//website link
-//concepts used / Contest Name
+//INCOMPLETE
+//DP | Knapsack 
+//https://www.spoj.com/problems/MINUS/
+bool getSeq(vector<char> &seq, vll &v, ll idx, ll m) {
+	if (idx <= 1)
+		return ((v[0] - v[1]) == m);
+	
+	seq[idx] = '-';
+	bool temp = getSeq(seq, v, idx-1, v[idx] + m);
+	if (temp)
+		return temp;
+	else {
+		seq[idx] = '+';
+		temp = getSeq(seq, v, idx-1, m - v[idx]);
+		return temp;
+	}
+}
+
 void solve() {
+	ll n, m, i;
+	cin >> n >> m;
 
+	vll v(n);
+	loop(i, 0, n)
+		cin >> v[i];
+	
+	vector<char> seq(n, 'x');
+	seq[0] = '+';
+	seq[1] = '-';
+
+	bool temp = getSeq(seq, v, n-1, m);
+	loop(i, 0, n)
+		cout << seq[i] << " ";
+	
 }
 
 int main() {
@@ -44,7 +74,7 @@ int main() {
 	int t = 1;
 	cin >> t;
 	for (int i = 1; i <= t; i++) {
-		// cout << "Case #" << i << ": ";
+		// cout << "Case " << i << ": ";
 		solve();
 	}
 

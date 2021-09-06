@@ -16,16 +16,40 @@ typedef unsigned long long llu;
 #define vll vector<ll>
 #define pll pair<ll, ll>
 #define vpll vector<pair<ll, ll>>
+#define mem(x, y) memset(x, y, sizeof(x))
 #define loop_diff(var, start, end, diff) for (ll var = start; var < end; var += diff)
 #define loop(var, start, end) for (auto var = start; var < end; var++)
 #define loop_rev(var, start, end) for(auto var = start; var > end; var--)
-#define ordered_set tree<ll, null_type,less<ll>, rb_tree_tag,tree_order_statistics_node_update>
+#define ordered_set tree<pll, null_type,less<pll>, rb_tree_tag,tree_order_statistics_node_update>
 
-//Question Title
-//website link
-//concepts used / Contest Name
+//https://www.spoj.com/problems/EDIST/
+//DP - Edit Distance
 void solve() {
+	string s1, s2;
+	int i, j, ans = 0, n, m;
+	cin >> s1 >> s2;
+	n = s1.size(), m = s2.size();
 
+	int dp[n+1][m+1];
+	mem(dp, 0);
+
+	loop(i, 0, n+1)
+		dp[i][0] = i;
+	loop(i, 0, m+1)
+		dp[0][i] = i;
+
+	loop(i, 1, n+1) {
+		loop(j, 1, m+1) {
+			if (s1[i-1] == s2[j-1]) {
+				dp[i][j] = dp[i-1][j-1];
+			}
+			else {
+				dp[i][j] = min(dp[i-1][j], min(dp[i][j-1], dp[i-1][j-1])) + 1;
+			}
+		}
+	}
+
+	cout << dp[n][m] << "\n";
 }
 
 int main() {

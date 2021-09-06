@@ -19,13 +19,56 @@ typedef unsigned long long llu;
 #define loop_diff(var, start, end, diff) for (ll var = start; var < end; var += diff)
 #define loop(var, start, end) for (auto var = start; var < end; var++)
 #define loop_rev(var, start, end) for(auto var = start; var > end; var--)
-#define ordered_set tree<ll, null_type,less<ll>, rb_tree_tag,tree_order_statistics_node_update>
+#define ordered_set tree<pll, null_type,less<pll>, rb_tree_tag,tree_order_statistics_node_update>
 
-//Question Title
-//website link
-//concepts used / Contest Name
+//2D DP
+//https://www.spoj.com/problems/SQRBR/
 void solve() {
+	ll n, k, i, inp;
+	cin >> n >> k;
+	string s(2*n+1, 'x');
 
+	s[1] = '[';
+	s[2*n] = ']';
+	loop(i, 0, k) {
+		cin >> inp;
+		s[inp] = '[';
+	}
+
+	ll dp[2*n+1][2*n+1];
+
+	loop(i, 0, 2*n+1)
+		loop(j, 0, 2*n+1)
+			dp[i][j] = 0;
+
+	dp[1][0] = 0;
+	dp[1][1] = 1;
+	loop(i, 2, 2*n + 1) {
+		loop(j, 0, i+1) {
+			if (s[i] == 'x') {
+				dp[i][j] = dp[i-1][j+1];
+				if (j)
+					dp[i][j] += dp[i-1][j-1];
+			}
+			else {
+				if (s[i] == '[') {
+					if (j)
+						dp[i][j] = dp[i-1][j-1];
+				}
+				else
+					dp[i][j] = dp[i-1][j+1];
+			}
+		}
+	}
+
+	// loop(i, 1, 2*n+1) {
+	// 	loop(j, 0, i+1) {
+	// 		cout << dp[i][j] << " ";
+	// 	}
+	// 	cout << "\n";
+	// }
+
+	cout << dp[2*n][0] << "\n";
 }
 
 int main() {
